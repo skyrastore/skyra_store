@@ -7,20 +7,28 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0c1b4d,#1e40af,#7dd3fc);font-family:sans-serif}
-.box{text-align:center;color:#fff;padding:40px 20px}
-.logo{font-size:3rem;margin-bottom:12px}
+.box{text-align:center;color:#fff;padding:40px 20px;width:100%;max-width:360px}
+.logo img{width:80px;height:80px;border-radius:20px}
+.logo{margin-bottom:12px}
 h1{font-size:1.5rem;font-weight:800;margin-bottom:6px}
 p{font-size:.85rem;opacity:.7;margin-bottom:24px}
-a{display:inline-block;padding:14px 36px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:.95rem}
+.links{display:flex;flex-direction:column;gap:10px}
+a{display:block;padding:14px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;text-decoration:none;font-size:.95rem}
+a.sec{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);font-size:.82rem}
 .sub{font-size:.7rem;opacity:.4;margin-top:20px}
 </style>
 </head>
 <body>
 <div class="box">
-<div class="logo"><img src="https://lh3.googleusercontent.com/d/1HmBuyY8D5ccBUUAP-GsCuiTNxpxsaDsu" style="width:80px;height:80px;border-radius:20px"></div>
+<div class="logo"><img src="https://lh3.googleusercontent.com/d/1HmBuyY8D5ccBUUAP-GsCuiTNxpxsaDsu"></div>
 <h1>Skyra Heart Store</h1>
 <p>Sky: Children of the Light</p>
-<a href="https://script.google.com/macros/s/AKfycby3vP1_UZn-LA83rf6mEFAZlszRDJgcmQaQpjc9U9A0NKqVIhOFq0LT3j8PS-joVGA/exec">Open Store</a>
+<div class="links">
+<a href="https://script.google.com/macros/s/AKfycby3vP1_UZn-LA83rf6mEFAZlszRDJgcmQaQpjc9U9A0NKqVIhOFq0LT3j8PS-joVGA/exec">🛒 Open Store</a>
+<a class="sec" href="https://script.google.com/macros/s/AKfycby3vP1_UZn-LA83rf6mEFAZlszRDJgcmQaQpjc9U9A0NKqVIhOFq0LT3j8PS-joVGA/exec?page=admin">🔐 Admin Panel</a>
+<a class="sec" href="https://script.google.com/macros/s/AKfycby3vP1_UZn-LA83rf6mEFAZlszRDJgcmQaQpjc9U9A0NKqVIhOFq0LT3j8PS-joVGA/exec?page=john">👤 Worker John</a>
+<a class="sec" href="https://script.google.com/macros/s/AKfycby3vP1_UZn-LA83rf6mEFAZlszRDJgcmQaQpjc9U9A0NKqVIhOFq0LT3j8PS-joVGA/exec?page=cyha">👤 Worker Cyha</a>
+</div>
 <div class="sub">© 2025 Skyra Store</div>
 </div>
 </body>
