@@ -62,6 +62,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 /* Footer */
 .footer{font-size:.6rem;color:var(--muted);text-align:center;animation:fadeUp .8s ease .7s both}
 
+/* Lang toggle */
+.lang-toggle{position:fixed;top:16px;left:16px;z-index:10;display:flex;gap:4px;animation:fadeUp .6s ease both}
+.lang-btn{padding:6px 12px;border-radius:8px;font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--muted);transition:all .2s ease}
+.lang-btn.on{background:rgba(56,189,248,.15);color:var(--accent);border-color:rgba(56,189,248,.3)}
+
 /* Animations */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
@@ -70,6 +75,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 </style>
 </head>
 <body>
+
+<div class="lang-toggle"><button class="lang-btn on" id="lID" onclick="setLang('id')">ID</button><button class="lang-btn" id="lEN" onclick="setLang('en')">EN</button></div>
 
 <div class="aurora">
 <div class="aurora-blob ab1"></div>
@@ -81,33 +88,33 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <div class="page">
 
-<div class="logo-ring"><div class="logo-inner">💙</div></div>
+<div class="logo-ring"><div class="logo-inner"><img src="https://drive.google.com/uc?id=1HmBuyY8D5ccBUUAP-GsCuiTNxpxsaDsu" alt="Skyra" style="width:90%;height:90%;object-fit:cover;border-radius:50%"></div></div>
 
 <h1 class="title">Skyra Heart Store</h1>
-<p class="subtitle">Sky: Children of the Light — Heart Service</p>
+<p class="subtitle" id="sub">Sky: Children of the Light — Jasa Heart</p>
 
 <div class="cards">
 <div class="card">
 <div class="card-icon">⚡</div>
 <div class="card-title">Instant</div>
-<div class="card-desc">Mulai Rp 28.000 · Via Memory Shared</div>
+<div class="card-desc" id="d1">Mulai Rp 28.000 · Via Memory Shared</div>
 </div>
 <div class="card">
 <div class="card-icon">💎</div>
 <div class="card-title">Special</div>
-<div class="card-desc">Mulai Rp 120.000 · Via Memory Shared</div>
+<div class="card-desc" id="d2">Mulai Rp 120.000 · Via Memory Shared</div>
 </div>
 <div class="card">
 <div class="card-icon">🔄</div>
 <div class="card-title">Reguler</div>
-<div class="card-desc">Mulai Rp 20.000 · Via Add Bot</div>
+<div class="card-desc" id="d3">Mulai Rp 20.000 · Via Add Bot</div>
 </div>
 </div>
 
 <div class="cta-group">
-<a href="https://script.google.com/macros/s/AKfycbxsSoH5tM3HjvNCSKzCJQ8B5tRMSk5NPmf5WMcG5o8bbzXaRHjrQux3InY4jFs1gbQ4/exec" class="cta cta-primary">🛒 Order Sekarang</a>
-<a href="https://script.google.com/macros/s/AKfycbxsSoH5tM3HjvNCSKzCJQ8B5tRMSk5NPmf5WMcG5o8bbzXaRHjrQux3InY4jFs1gbQ4/exec" class="cta cta-secondary">📦 Track Pesanan</a>
-<a href="https://script.google.com/macros/s/AKfycbxsSoH5tM3HjvNCSKzCJQ8B5tRMSk5NPmf5WMcG5o8bbzXaRHjrQux3InY4jFs1gbQ4/exec" class="cta cta-secondary">📋 History</a>
+<a href="https://script.google.com/macros/s/AKfycbxsSoH5tM3HjvNCSKzCJQ8B5tRMSk5NPmf5WMcG5o8bbzXaRHjrQux3InY4jFs1gbQ4/exec" class="cta cta-primary" id="cta1">🛒 Order Sekarang</a>
+<a href="https://script.google.com/macros/s/AKfycbxsSoH5tM3HjvNCSKzCJQ8B5tRMSk5NPmf5WMcG5o8bbzXaRHjrQux3InY4jFs1gbQ4/exec" class="cta cta-secondary" id="cta2">📦 Track Pesanan</a>
+<a href="https://script.google.com/macros/s/AKfycbxsSoH5tM3HjvNCSKzCJQ8B5tRMSk5NPmf5WMcG5o8bbzXaRHjrQux3InY4jFs1gbQ4/exec" class="cta cta-secondary" id="cta3">📋 Riwayat</a>
 </div>
 
 <div class="socials">
@@ -120,9 +127,17 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 </div>
 
 <script>
-// Generate stars
 var s=document.getElementById('stars');
 for(var i=0;i<80;i++){var d=document.createElement('div');d.className='star';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.width=d.style.height=(.5+Math.random()*1.5)+'px';d.style.animationDelay=Math.random()*4+'s';d.style.animationDuration=(3+Math.random()*3)+'s';s.appendChild(d)}
+var L='id';
+function setLang(l){L=l;document.getElementById('lID').className='lang-btn'+(l==='id'?' on':'');document.getElementById('lEN').className='lang-btn'+(l==='en'?' on':'');
+document.getElementById('sub').textContent=l==='id'?'Sky: Children of the Light — Jasa Heart':'Sky: Children of the Light — Heart Service';
+document.getElementById('d1').textContent=l==='id'?'Mulai Rp 28.000 · Via Memory Shared':'From Rp 28,000 · Via Memory Shared';
+document.getElementById('d2').textContent=l==='id'?'Mulai Rp 120.000 · Via Memory Shared':'From Rp 120,000 · Via Memory Shared';
+document.getElementById('d3').textContent=l==='id'?'Mulai Rp 20.000 · Via Add Bot':'From Rp 20,000 · Via Add Bot';
+document.getElementById('cta1').textContent=l==='id'?'🛒 Order Sekarang':'🛒 Order Now';
+document.getElementById('cta2').textContent=l==='id'?'📦 Track Pesanan':'📦 Track Order';
+document.getElementById('cta3').textContent=l==='id'?'📋 Riwayat':'📋 History';}
 </script>
 </body>
 </html>
