@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://skyrastore.github.io/skyra_store/sitemap.xml
