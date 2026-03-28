@@ -75,3 +75,4 @@ function rmBL(v){google.script.run.withSuccessHandler(function(r){toast(r.messag
 function loadBL(){google.script.run.withSuccessHandler(function(list){var el=document.getElementById('blList');el.innerHTML=list.length?list.map(function(b){return'<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;font-size:.78rem"><span>'+esc(b)+'</span><button class="btn btn-r" style="margin:0;padding:4px 10px;font-size:.68rem" onclick="rmBL(\''+esc(b)+'\')">✕</button></div>'}).join(''):'<div class="empty" style="padding:10px">No blocked contacts</div>'}).withFailureHandler(function(){}).getBlacklist()}
 setInterval(load,15000);
 </script></body></html>
+ 
