@@ -239,3 +239,4 @@ var trackTimer=null;
 function goTrack(id){sv('track');document.getElementById('rInp').value=id;curRec=id;doChk();if(pollTimer){clearInterval(pollTimer);pollTimer=null}if(_trackTimer)clearInterval(_trackTimer);_trackTimer=setInterval(function(){if(curRec)doChk()},20000)}
 
 </script></body></html>
+ 
