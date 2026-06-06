@@ -2,6 +2,8 @@
 
 Game service management system for **Sky: Children of the Light**, built on Google Apps Script + Google Sheets.
 
+Live: [skyrastore.github.io/skyra_store](https://skyrastore.github.io/skyra_store/) · IG: [@skyra_store2](https://instagram.com/skyra_store2)
+
 ## Services
 
 ### 💙 Heart Service (`/heart`)
@@ -11,22 +13,24 @@ Heart sending service with 3 product types: Instant, Special, and Reguler.
 
 | File | Description |
 |------|-------------|
-| `Code.gs` | Backend — order routing, delivery system, payroll, refund, archive |
-| `customer.html` | Customer panel — order form, tracking, cart, refund request |
-| `admin.html` | Admin dashboard — orders, finance, refunds, blacklist, worker management |
+| `Code.gs` | Backend — order routing, delivery system, payroll, refund, archive, Telegram notify |
+| `customer.html` | Customer panel — order form, tracking, cart, refund request, reorder |
+| `admin.html` | Admin dashboard — orders, finance, refunds, blacklist, worker management, raw settings editor |
 | `worker.html` | Universal worker template — dynamically loads per worker name |
 
-### 🎮 Joki Service (`/joki`)
-Account running/joki service: Candle Run, Eden, WL, Shard, etc.
+### 🕯️ Run Service (`/joki`) — *internal name: Joki*
+Account running service: Candle Run, Eden, WL Collection, Shard, Daily Task, Light Spirit, etc.
 
 **Workers:** Bayu, Elia, Ciel
 
 | File | Description |
 |------|-------------|
-| `Code.gs` | Backend v4 — 11 features (blacklist, refund, returning discount, etc.) |
-| `customer.html` | Customer panel — cart, bilingual, refund request |
-| `admin.html` | Admin dashboard — revenue, refunds, blacklist, finance |
-| `worker.html` | Universal worker template — proof upload, mark done, payroll |
+| `Code.gs` | Backend — slot-based proof system, split-flow, payroll, refund, archive |
+| `customer.html` | Customer panel — Via Login / Via Gandeng flow, cart, bilingual, refund request |
+| `admin.html` | Admin dashboard — revenue, refunds, finance, pricing matrix, settings KV editor |
+| `worker.html` | Universal worker template — slot photo upload, mark done, payroll |
+
+> URL path stays `/joki` for backward-compat; customer-facing brand is **RUN SERVICE**.
 
 ## Architecture
 
@@ -45,17 +49,22 @@ Both services use a **dynamic worker system** — a single `worker.html` templat
 - **Dynamic Pricing** — edit prices from Google Sheet, auto-update in web (1 min cache)
 - **Blacklist** — block problematic contacts
 - **Auto-Cancel** — unpaid orders cancelled after 24h
-- **Returning Customer Discount** — Bronze (≥1) / Silver (≥6) / Gold (≥11) tiers
-- **Refund System** — customer request → admin approve/reject
+- **Returning Customer Discount** — auto 1% off on reorder with prior Record ID
+- **Voucher System** — admin creates code, customer applies at checkout (date/product/tier filter, max-use cap, min-order, max-disc cap)
+- **Refund System** — customer request → admin approve/reject, voucher auto-restored
 - **Multi-Order Cart** — order multiple services at once
 - **Payment Polling** — auto-detect when admin marks paid
-- **Bilingual** — Indonesian / English toggle
-- **Worker Payroll** — auto-calculated from delivery logs (Heart) / flat rate per order (Joki)
+- **Bilingual** — Indonesian / English toggle (both panels + landing)
+- **Worker Payroll** — auto-calculated from delivery logs (Heart) / per-slot proof (Joki)
 - **Ex-Worker Display** — admin sees which workers previously handled a customer
-- **Worker Deactivation** — one-click reassign all orders + set inactive (Heart)
-- **Archive** — old data auto-archived after 60 days
-- **PIN Security** — lockout after 5 failed attempts (15 min)
-- **Consistency Check** — auto-detects orphan orders (Joki)
+- **Worker Resign Wizard** — 3-step: freeze → migrate orders → settle payroll → permanent delete + blacklist
+- **Split Flow** (Joki) — admin can split a partially-done order, payroll reconciled automatically
+- **Archive** — old completed/cancelled orders auto-archived (Heart: 60 days, Joki: 1 year)
+- **PIN Security** — lockout after failed attempts
+- **Consistency Check** — auto-detects orphan orders
+- **Telegram Notifications** — order assigned, payroll summary; auto-clears stale chat IDs (kicked/blocked/deleted group)
+- **Settings KV Editor** — admin edits arbitrary Settings sheet keys from web UI (undoable)
+- **Text-format-locked columns** — Telegram chat ID & contact phone numbers stored as text to prevent scientific-notation corruption
 
 ## Deployment
 
@@ -70,6 +79,16 @@ Both services use a **dynamic worker system** — a single `worker.html` templat
 4. Deploy → New deployment → Web app → Anyone can access
 5. Run `setupPriceSheets()` once to create PriceList & WorkerRates sheets
 6. Run `setupTriggers()` once to set up automation (auto-cancel, archive, etc.)
+7. (Optional) Run `migrateSettings*()` once to organize Settings sheet
+8. (Optional) Run `repairData*()` once to fix scientific-notation in legacy data
+
+### iframe Embedding (Landing Page)
+For `index.html` iframe overlay to work, `doGet()` must set ALLOWALL:
+```js
+return HtmlService.createTemplateFromFile('Customer').evaluate()
+  .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+```
+Without this, browser blocks embedding and customer sees "Open in New Tab" fallback.
 
 ### Updating
 - **Code.gs changes** → Save → Deploy → Manage deployments → New version → Deploy
@@ -84,7 +103,19 @@ Both services use a **dynamic worker system** — a single `worker.html` templat
 - No external dependencies
 
 ## Landing Page
-`index.html` serves as the GitHub Pages landing page at `skyrastore.github.io/skyra_store/`, with SEO meta tags and an iframe overlay to the Apps Script web app.
+`index.html` serves as the GitHub Pages landing page at `skyrastore.github.io/skyra_store/`.
+
+Features:
+- SEO meta (description, keywords, canonical, robots)
+- Open Graph + Twitter card for WA/IG link preview
+- JSON-LD `Store` schema for Google rich results
+- Bilingual ID/EN toggle
+- Animated stars background (Sky-themed gradient)
+- Two service cards: HEART SERVICE + RUN SERVICE
+- Trust strip (orders count, rating, refund badge)
+- How it works section (3-step)
+- iframe overlay to Apps Script web app (no redirect, stays on brand)
+- Graceful fallback to "Open in New Tab" if iframe blocked
 
 ## License
 Private — Skyra Store © 2026
