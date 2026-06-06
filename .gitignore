@@ -1,11 +1,33 @@
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Editor
 .vscode/
 .idea/
+*.swp
+*~
+
+# Office lock files
+~$*
 
 # Temp
 *.tmp
 *.bak
+*.log
+
+# Local backups / exports
+*.xlsx
+*.zip
+_latest*
+
+# Audit / preview work files
+_preview*
+*_preview_*.png
+Ctemp*
+*tempids*
+
+# Apps Script source (push via clasp, not git)
+*.gs
+.clasp.json
