@@ -580,11 +580,20 @@ function setL(l){
   document.documentElement.lang=l;
 }
 
+/* Services with X-Frame-Options: SAMEORIGIN on their deployment cannot be
+   iframed. Google Apps Script now defaults new deployments to SAMEORIGIN
+   regardless of setXFrameOptionsMode(ALLOWALL). Open these in a new tab. */
+var NO_IFRAME={heart:1};
+
 /* App overlay + iframe fallback */
 function openApp(svc){
   var url=URLS[svc];
   if(!url){
     alert(L==='id'?'Segera hadir!':'Coming soon!');
+    return;
+  }
+  if(NO_IFRAME[svc]){
+    window.open(url,'_blank','noopener');
     return;
   }
   var frame=document.getElementById('appFrame');
